@@ -1,7 +1,8 @@
 import classnames from "classnames";
 import React from "react";
+import { ColorAbbreviations } from "~/components/card";
 import ColorSymbol from "~/components/colorSymbol";
-import Txt from "~/components/ui/txt";
+import Txt, { TxtSize } from "~/components/ui/txt";
 import { useGame } from "~/hooks/game";
 import { IColor, IHintLevel, IHintType, INumber } from "~/lib/state";
 
@@ -38,6 +39,9 @@ export default function Hint(props: Props) {
         >
           {type === "number" && <Txt value={value} />}
           {displaySymbol && <ColorSymbol color={value as IColor} />}
+          {displaySymbol && ColorAbbreviations[value as string] && (
+            <Txt className="absolute main-dark b" size={TxtSize.XXSMALL} value={ColorAbbreviations[value as string]} />
+          )}
         </div>
       )}
 

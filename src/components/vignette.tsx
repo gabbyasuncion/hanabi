@@ -1,7 +1,8 @@
 import classnames from "classnames";
 import React, { CSSProperties } from "react";
+import { ColorAbbreviations } from "~/components/card";
 import ColorSymbol from "~/components/colorSymbol";
-import Txt from "~/components/ui/txt";
+import Txt, { TxtSize } from "~/components/ui/txt";
 import { useGame } from "~/hooks/game";
 import { GameVariant, IColor, IHintAction, IHintType } from "~/lib/state";
 
@@ -40,6 +41,9 @@ export default function Vignette(props: Props) {
       onClick={() => onClick?.({ type, value: value as IHintAction["value"] })}
     >
       {displaySymbol && <ColorSymbol color={value as IColor} />}
+      {displaySymbol && ColorAbbreviations[value as string] && (
+        <Txt className="absolute main-dark b" size={TxtSize.SMALL} value={ColorAbbreviations[value as string]} />
+      )}
       {type === "number" && (
         <Txt
           value={

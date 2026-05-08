@@ -40,6 +40,17 @@ export const PositionMap = {
   4: "E",
 };
 
+export const ColorAbbreviations: Record<string, string> = {
+  red: "R",
+  blue: "B",
+  green: "G",
+  yellow: "Y",
+  white: "W",
+  orange: "O",
+  multicolor: "M",
+  rainbow: "🌈",
+};
+
 export enum ICardContext {
   SELF_PLAYER,
   OTHER_PLAYER,
@@ -94,6 +105,13 @@ export function CardWrapper(props: CardWrapperProps) {
       {...attributes}
     >
       {colorBlindMode && <ColorSymbol color={color as IColor} />}
+      {colorBlindMode && color !== "gray-light" && ColorAbbreviations[color] && (
+        <Txt
+          className="absolute left-0 top-0 ma1 main-dark b"
+          size={TxtSize.XSMALL}
+          value={ColorAbbreviations[color]}
+        />
+      )}
       {children}
     </div>
   );
