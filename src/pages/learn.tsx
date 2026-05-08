@@ -49,7 +49,12 @@ function token(color: string, size = 1) {
 
 const Divider = () => <div className="mv4 bt b--yellow w4" />;
 
-function useSteps(colorBlindMode: boolean, setColorBlindMode: (newColorBlindMode: boolean) => void) {
+function useSteps(
+  colorBlindMode: boolean,
+  setColorBlindMode: (newColorBlindMode: boolean) => void,
+  colorBlindAbbreviations: boolean,
+  setColorBlindAbbreviations: (newColorBlindAbbreviations: boolean) => void
+) {
   const { t } = useTranslation();
   const router = useRouter();
   const gameId = router.query["back-to-game"];
@@ -104,6 +109,25 @@ function useSteps(colorBlindMode: boolean, setColorBlindMode: (newColorBlindMode
               checked={colorBlindMode}
               onChange={(e) => {
                 setColorBlindMode(e.target.checked);
+              }}
+            />
+          </div>
+          <div
+            className="flex items-center mt2 lavender"
+            onClick={() => setColorBlindAbbreviations(!colorBlindAbbreviations)}
+          >
+            <Txt
+              className="lavender mr2"
+              size={TxtSize.XSMALL}
+              value={t(
+                "learn.colorBlindAbbreviations.label",
+                "Prefer letters over symbols? Toggle color-blind abbreviations"
+              )}
+            />
+            <Checkbox
+              checked={colorBlindAbbreviations}
+              onChange={(e) => {
+                setColorBlindAbbreviations(e.target.checked);
               }}
             />
           </div>
@@ -334,7 +358,8 @@ const Step = posed.div({
 export default function Learn() {
   const [currentStep, setCurrentStep] = useState(0);
   const [colorBlindMode, setColorBlindMode] = useLocalStorage("colorBlindMode", false);
-  const steps = useSteps(colorBlindMode, setColorBlindMode);
+  const [colorBlindAbbreviations, setColorBlindAbbreviations] = useLocalStorage("colorBlindAbbreviations", false);
+  const steps = useSteps(colorBlindMode, setColorBlindMode, colorBlindAbbreviations, setColorBlindAbbreviations);
   const router = useRouter();
   const { t } = useTranslation();
 

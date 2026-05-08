@@ -59,6 +59,7 @@ export default function NewGame() {
   const [hintsLevel, setHintsLevel] = useState(IGameHintsLevel.DIRECT);
   const [turnsHistory] = useState(true);
   const [colorBlindMode, setColorBlindMode] = useLocalStorage("colorBlindMode", false);
+  const [colorBlindAbbreviations, setColorBlindAbbreviations] = useLocalStorage("colorBlindAbbreviations", false);
   const [botsWait, setBotsWait] = useState(process.env.NODE_ENV === "production" ? 1000 : 0);
 
   const [creatingGame, setCreatingGame] = useState(false);
@@ -88,6 +89,7 @@ export default function NewGame() {
         turnsHistory,
         botsWait,
         colorBlindMode,
+        colorBlindAbbreviations,
         gameMode: offline ? GameMode.PASS_AND_PLAY : GameMode.NETWORK,
       })
     );
@@ -178,6 +180,20 @@ export default function NewGame() {
               subText={t("colorBlindModeSubtext", "Display symbols on top of cards to help distinguish colors")}
             >
               <Checkbox checked={colorBlindMode} onChange={(e) => setColorBlindMode(e.target.checked)} />
+            </Field>
+
+            <Field
+              className="pb3 mb3 bb b--yellow-light"
+              label={t("colorBlindAbbreviations", "Color blind abbreviations")}
+              subText={t(
+                "colorBlindAbbreviationsSubtext",
+                "Display letter abbreviations on cards to help distinguish colors"
+              )}
+            >
+              <Checkbox
+                checked={colorBlindAbbreviations}
+                onChange={(e) => setColorBlindAbbreviations(e.target.checked)}
+              />
             </Field>
 
             <Field
