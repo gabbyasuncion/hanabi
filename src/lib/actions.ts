@@ -3,6 +3,11 @@ import { cloneDeep, findIndex, flatMap, last, range, shuffle, zipObject } from "
 import mem from "mem";
 import { shuffle as shuffleSeed } from "shuffle-seed";
 import { generateShuffleSeed, nextGameId } from "./id";
+
+// Re-export extracted modules for backward compatibility
+export { getColors, getHintableColors } from "./variant-utils";
+export { getScore, getMaximumScore, getPlayedCardsPile, getMaximumPossibleScore } from "./scoring";
+export { applyHint, emptyHint, matchColor, matchNumber, matchHint } from "./hint-system";
 import IGameState, {
   GameVariant,
   IAction,
