@@ -48,6 +48,7 @@ export interface IGameOptions {
   botsWait: number;
   gameMode: GameMode;
   colorBlindMode: boolean;
+  colorBlindAbbreviations?: boolean;
   tutorial?: boolean;
 }
 

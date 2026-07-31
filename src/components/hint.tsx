@@ -1,8 +1,9 @@
 import classnames from "classnames";
 import React from "react";
+import { ColorAbbreviations } from "~/components/card";
 import ColorSymbol from "~/components/colorSymbol";
-import Txt from "~/components/ui/txt";
-import { useGame } from "~/hooks/game";
+import Txt, { TxtSize } from "~/components/ui/txt";
+import { useColorBlindAbbreviations, useGame } from "~/hooks/game";
 import { IColor, IHintLevel, IHintType, INumber } from "~/lib/state";
 
 interface Props {
@@ -16,9 +17,11 @@ export default function Hint(props: Props) {
   const { type, value, hint, className } = props;
 
   const game = useGame();
+  const colorBlindAbbreviations = useColorBlindAbbreviations();
 
   const color = type === "color" ? value : "white";
   const displaySymbol = game.options.colorBlindMode && type === "color";
+  const displayAbbreviation = colorBlindAbbreviations && type === "color";
 
   return (
     <div
@@ -38,6 +41,9 @@ export default function Hint(props: Props) {
         >
           {type === "number" && <Txt value={value} />}
           {displaySymbol && <ColorSymbol color={value as IColor} />}
+          {displayAbbreviation && ColorAbbreviations[value as string] && (
+            <Txt className="absolute black b" size={TxtSize.XXSMALL} value={ColorAbbreviations[value as string]} />
+          )}
         </div>
       )}
 

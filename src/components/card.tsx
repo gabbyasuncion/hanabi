@@ -4,7 +4,7 @@ import ColorSymbol from "~/components/colorSymbol";
 import Hint from "~/components/hint";
 import { ReceivedHints } from "~/components/receivedHintsPopover";
 import Txt, { TxtSize } from "~/components/ui/txt";
-import { useColorBlindMode, useGame } from "~/hooks/game";
+import { useColorBlindAbbreviations, useColorBlindMode, useGame } from "~/hooks/game";
 import useLongPress from "~/hooks/longPress";
 import { getColors, numbers } from "~/lib/actions";
 import { ICard, IColor, IGameHintsLevel, IHintLevel } from "~/lib/state";
@@ -38,6 +38,17 @@ export const PositionMap = {
   2: "C",
   3: "D",
   4: "E",
+};
+
+export const ColorAbbreviations: Record<string, string> = {
+  red: "R",
+  blue: "B",
+  green: "G",
+  yellow: "Y",
+  white: "W",
+  orange: "O",
+  multicolor: "M",
+  rainbow: "🌈",
 };
 
 export enum ICardContext {
@@ -75,6 +86,7 @@ export function CardWrapper(props: CardWrapperProps) {
   } = props;
 
   const colorBlindMode = useColorBlindMode();
+  const colorBlindAbbreviations = useColorBlindAbbreviations();
   const sizeClass = CardClasses[size];
 
   return (
@@ -94,6 +106,9 @@ export function CardWrapper(props: CardWrapperProps) {
       {...attributes}
     >
       {colorBlindMode && <ColorSymbol color={color as IColor} />}
+      {colorBlindAbbreviations && color !== "gray-light" && ColorAbbreviations[color] && (
+        <Txt className="absolute left-0 top-0 ma1 black b" size={TxtSize.XSMALL} value={ColorAbbreviations[color]} />
+      )}
       {children}
     </div>
   );

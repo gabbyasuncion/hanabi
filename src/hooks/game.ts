@@ -15,6 +15,15 @@ export function useColorBlindMode() {
   }
   return persistedColorBlindMode;
 }
+
+export function useColorBlindAbbreviations() {
+  const game = useGame();
+  const [persistedColorBlindAbbreviations] = useLocalStorage("colorBlindAbbreviations", false);
+  if (game) {
+    return game.options.colorBlindAbbreviations ?? false;
+  }
+  return persistedColorBlindAbbreviations;
+}
 export function useGame() {
   const game = useContext<IGameState>(GameContext);
   const replay = useReplay();

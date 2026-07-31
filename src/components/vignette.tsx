@@ -1,8 +1,9 @@
 import classnames from "classnames";
 import React, { CSSProperties } from "react";
+import { ColorAbbreviations } from "~/components/card";
 import ColorSymbol from "~/components/colorSymbol";
-import Txt from "~/components/ui/txt";
-import { useGame } from "~/hooks/game";
+import Txt, { TxtSize } from "~/components/ui/txt";
+import { useColorBlindAbbreviations, useGame } from "~/hooks/game";
 import { GameVariant, IColor, IHintAction, IHintType } from "~/lib/state";
 
 interface Props {
@@ -18,8 +19,10 @@ export default function Vignette(props: Props) {
   const { type, value, onClick, className, selected = false } = props;
 
   const game = useGame();
+  const colorBlindAbbreviations = useColorBlindAbbreviations();
 
   const displaySymbol = game?.options?.colorBlindMode && type === "color";
+  const displayAbbreviation = colorBlindAbbreviations && type === "color";
 
   const style = {
     ...props.style,
@@ -40,6 +43,9 @@ export default function Vignette(props: Props) {
       onClick={() => onClick?.({ type, value: value as IHintAction["value"] })}
     >
       {displaySymbol && <ColorSymbol color={value as IColor} />}
+      {displayAbbreviation && ColorAbbreviations[value as string] && (
+        <Txt className="absolute black b" size={TxtSize.SMALL} value={ColorAbbreviations[value as string]} />
+      )}
       {type === "number" && (
         <Txt
           value={
